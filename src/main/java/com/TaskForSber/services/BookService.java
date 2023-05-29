@@ -29,6 +29,11 @@ public class BookService {
     }
 
     @Transactional
+    public void delete(Book book){
+        bookRepository.delete(book);
+    }
+
+    @Transactional
     public void save(Book book){
         bookRepository.save(book);
     }

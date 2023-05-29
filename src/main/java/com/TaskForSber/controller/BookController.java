@@ -1,13 +1,14 @@
 package com.TaskForSber.controller;
 
 import com.TaskForSber.dto.BookDTO;
+import com.TaskForSber.exceptions.BookNotCreatedException;
 import com.TaskForSber.models.Book;
 import com.TaskForSber.services.BookService;
-import org.hibernate.Hibernate;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,10 +47,34 @@ public class BookController {
         return ResponseEntity.ok(HttpStatus.NOT_FOUND);
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<HttpStatus> add(@RequestBody @Valid BookDTO bookDTO,
+                                          BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            throw new BookNotCreatedException("Book not added. Check your fields!");
+        }
+        bookService.save(convertToBook(bookDTO));
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable int id){
+        Book book = bookService.findById(id);
+        if (book == null)
+            return ResponseEntity.ok(HttpStatus.NOT_FOUND);
+        bookService.delete(book);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
     private BookDTO convertToBookDTO(Book book){
         BookDTO bookDTO = new BookDTO(book.getTitle(),book.getAuthor(), book.getYear());
         bookDTO.setFree(book.isFree());
         return bookDTO;
+    }
+
+    private Book convertToBook(BookDTO bookDTO){
+        Book book = new Book(bookDTO.getTitle(), bookDTO.getAuthor(), bookDTO.getYear());
+        return book;
     }
 
 

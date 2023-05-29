@@ -1,0 +1,144 @@
+openapi: 3.0.0
+info:
+  title: Учет книг библиотеки
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080/books
+    description: Main server
+paths:
+  /books:
+    get:
+      summary: Запрос для получения списка книг
+      tags: 
+        - books
+      operationId: getAllBooks
+      responses:
+        '200':
+          description: Успешный ответ со списком книг
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Books"
+        'default':
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /books/add:
+    post:
+      summary: Запрос для добавления книги
+      tags:
+        - books
+      operationId: createBook
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+      responses:
+        '200':
+          description: Успешный ответ со списком книг
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Books"
+        'default':
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"          
+  /books/{id}:
+    patch:
+      summary: Запрос для изменения статуса книги
+      tags:
+        - books
+      operationId: changeStatus
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор книги
+          schema: 
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Успешный ответ со списком книг
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Books"
+        'default':
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Запрос для удаления книги
+      tags:
+        - books
+      operationId: deleteBook
+      responses:
+        '200':
+          description: Успешный ответ со списком книг
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Books"
+        'default':
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+                
+        
+            
+            
+components:
+  schemas:
+    Book:
+      type: object
+      required:
+        - title
+        - author
+        - year
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: 'Martin Eden'
+        author:
+          type: string
+          example: 'Jack London'
+        year:
+          type: integer
+          example: 2001
+        isFree:
+          type: boolean
+          example: true
+    Books:
+      type: array
+      items:
+        $ref: "#/components/schemas/Book"
+    Error:
+      type: object
+      required: 
+        - code
+        - name
+      properties:
+        code:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: "not found"
+          
+         
+      
