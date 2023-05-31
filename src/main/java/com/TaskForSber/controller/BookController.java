@@ -1,8 +1,10 @@
 package com.TaskForSber.controller;
 
 import com.TaskForSber.dto.BookDTO;
-import com.TaskForSber.exceptions.BookNotCreatedException;
+import com.TaskForSber.dto.UserDTO;
+import com.TaskForSber.exceptions.book.BookNotCreatedException;
 import com.TaskForSber.models.Book;
+import com.TaskForSber.models.User;
 import com.TaskForSber.services.BookService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +71,13 @@ public class BookController {
     private BookDTO convertToBookDTO(Book book){
         BookDTO bookDTO = new BookDTO(book.getTitle(),book.getAuthor(), book.getYear());
         bookDTO.setFree(book.isFree());
+        bookDTO.setPersonDTO(convertToUserDTO(book.getUser()));
         return bookDTO;
+    }
+
+    private UserDTO convertToUserDTO(User user){
+        UserDTO userDTO = new UserDTO(user.getName(), user.getPassword(), user.getYear());
+        return userDTO;
     }
 
     private Book convertToBook(BookDTO bookDTO){

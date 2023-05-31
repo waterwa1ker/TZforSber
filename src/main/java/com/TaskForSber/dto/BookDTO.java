@@ -1,27 +1,23 @@
 package com.TaskForSber.dto;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+
 
 public class BookDTO {
 
-    @Size(min = 3, max = 50, message = "Title' size should be between 3 and 50")
-    @Column(name = "title")
+
     private String title;
 
-    @Column(name = "author")
-    @Size(min = 3, max = 40, message = "Author's name should be between 3 and 40")
+
     private String author;
 
-    @Column(name = "year")
-    @Min(value = 1000, message = "year should be greater than 1000!")
+
     private int year;
 
-    @Column(name = "isfree")
-    @NotNull(message = "isFree shouldn't be null!")
+
     private boolean isFree;
+
+
+    private UserDTO userDTO;
 
     public BookDTO() {
     }
@@ -30,6 +26,14 @@ public class BookDTO {
         this.title = title;
         this.author = author;
         this.year = year;
+    }
+
+    public UserDTO getPersonDTO() {
+        return userDTO;
+    }
+
+    public void setPersonDTO(UserDTO userDTO) {
+        this.userDTO = userDTO;
     }
 
     public String getTitle() {

@@ -30,6 +30,10 @@ public class Book {
     @NotNull(message = "isFree shouldn't be null!")
     private boolean isFree;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
+
     public Book() {
     }
 
@@ -37,6 +41,14 @@ public class Book {
         this.title = title;
         this.author = author;
         this.year = year;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getId() {
