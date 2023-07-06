@@ -37,6 +37,10 @@ public class User {
     @Min(value = 1900, message = "year of birth should be more than 1900")
     private int yearOfBirth;
 
+    @Column(name = "role")
+    @Size(min = 4, max = 50, message = "user or admin")
+    private String role;
+
     @OneToMany(mappedBy = "user")
     private List<Book> books;
 
@@ -46,11 +50,12 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, String name, int yearOfBirth) {
+    public User(String email, String password, String name, int yearOfBirth, String role) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.yearOfBirth = yearOfBirth;
+        this.role = role;
     }
 
     public int getUserId() {
@@ -83,6 +88,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public List<Book> getBooks() {

@@ -31,12 +31,17 @@ public class UserDTO {
     @Min(value = 1900, message = "year of birth should be more than 1900")
     private int yearOfBirth;
 
+    @Column(name = "role")
+    @Size(min = 4, max = 50, message = "user or admin")
+    private String role;
 
-    public UserDTO(String email, String password, String name, int yearOfBirth) {
+
+    public UserDTO(String email, String password, String name, int yearOfBirth, String role) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.yearOfBirth = yearOfBirth;
+        this.role = role;
     }
 
     public String getEmail() {
@@ -69,5 +74,13 @@ public class UserDTO {
 
     public void setYearOfBirth(int yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

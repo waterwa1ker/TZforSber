@@ -88,7 +88,8 @@ public class BookController {
         UserDTO userDTO = new UserDTO(user.getEmail(),
                 user.getPassword(),
                 user.getName(),
-                user.getYearOfBirth());
+                user.getYearOfBirth(),
+                user.getRole());
         return userDTO;
     }
 
@@ -104,7 +105,8 @@ public class BookController {
         User user = new User(userDTO.getEmail(),
                 userDTO.getPassword(),
                 userDTO.getName(),
-                userDTO.getYearOfBirth());
+                userDTO.getYearOfBirth(),
+                userDTO.getRole());
         return user;
     }
 
